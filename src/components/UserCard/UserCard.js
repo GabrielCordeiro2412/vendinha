@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, Platform } from 'react-native'
-import React from 'react'
-import { ViewValorDivida, ViewUserCard, TextBold, TitleCard, CommomText } from '../styles/global'
+import { View, Text, StyleSheet, Platform } from 'react-native';
+import React from 'react';
+import { ViewValorDivida, ViewCard, TextBold, TitleCard, CommomText } from '../../styles/global';
 
 export default function UserCard(data) {
     return (
-        <ViewUserCard style={styles.cardContainer}>
+        <ViewCard style={styles.cardContainer}>
             <View>
                 <TitleCard>{data.data.nome}</TitleCard>
                 <Text><TextBold>CPF: </TextBold><CommomText>{data.data.cpf}</CommomText></Text>
@@ -14,7 +14,7 @@ export default function UserCard(data) {
                     <TextBold>000</TextBold>
                 </ViewValorDivida>
             </View>
-        </ViewUserCard>
+        </ViewCard>
     )
 }
 

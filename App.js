@@ -1,7 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import AppRoutes from './src/routes/routes';
-import HomeIcon from './assets/HomeIcon.svg'
+import AppRoutes from './src/routes/app.routes.js';
 
 export default function App() {
   return (
@@ -10,12 +7,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

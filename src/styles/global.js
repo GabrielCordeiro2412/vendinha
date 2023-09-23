@@ -1,7 +1,4 @@
-import React from 'react';
-import { TouchableOpacity, Text, SafeAreaView, TextInput } from 'react-native';
 import styled from 'styled-components/native';
-
 
 export const Container = styled.SafeAreaView`
     flex: 1;
@@ -37,7 +34,7 @@ export const ViewInput = styled.View`
     width: 100%;
 `;
 
-export const ViewUserCard = styled.View`
+export const ViewCard = styled.View`
     width: 100%;
     padding: 10px;
     border-radius: 8px;
@@ -82,5 +79,12 @@ export const AddButton = styled.TouchableOpacity`
 export const CommomText = styled.Text`
     font-weight: 400;
     font-size: 14px;
-    color: rgba(112, 112, 112, 1)
+    color: rgba(112, 112, 112, 1);
+`
+
+export const DividaValues = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
 `
