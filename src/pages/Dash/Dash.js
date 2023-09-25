@@ -10,11 +10,15 @@ import UserCard from '../../components/UserCard/UserCard';
 
 import { getAllClientes } from '../../services/getAllClientes';
 
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Dash() {
 
     const [loading, setLoading] = useState(false);
     const [clientes, setClientes] = useState();
+
+    const navigator = useNavigation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,7 +59,7 @@ export default function Dash() {
                         />
                     )
                 }
-                <AddButton>
+                <AddButton onPress={() => navigator.navigate('PerfilCliente', { action: 'new' })}>
                     <AddWhite width="25" height="25" />
                 </AddButton>
             </SubContainer>

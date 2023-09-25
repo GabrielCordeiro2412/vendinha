@@ -9,6 +9,8 @@ import { Platform } from 'react-native';
 
 import HomeIcon from "../assets/HomeIcon.svg";
 import UserIcon from "../assets/UserIcon.svg";
+import PerfilCliente from "../pages/Cliente/PerfilCliente";
+import NovaDivida from "../pages/Divida/NovaDivida";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,6 +33,16 @@ export default function AppRoutes() {
                 <Stack.Screen
                     name="Dash"
                     component={Tabs}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="PerfilCliente"
+                    component={PerfilCliente}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="NovaDivida"
+                    component={NovaDivida}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>
@@ -60,6 +72,7 @@ function Tabs() {
                         return <HomeIcon width="35" height="35" />
                     },
                 }} />
+
             <Tab.Screen
                 name="Dash"
                 component={Dash}
@@ -68,6 +81,7 @@ function Tabs() {
                         return <UserIcon width="35" height="35" />
                     }
                 }} />
+
         </Tab.Navigator>
     )
 }

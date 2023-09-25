@@ -1,11 +1,16 @@
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { ViewValorDivida, ViewCard, TextBold, TitleCard, CommomText } from '../../styles/global';
 
+import { useNavigation } from '@react-navigation/native';
+
 export default function UserCard(data) {
+
+    const navigator = useNavigation();
+
     return (
         <ViewCard style={styles.cardContainer}>
-            <View>
+            <TouchableOpacity onPress={() => navigator.navigate('PerfilCliente', { action: 'edit' })}>
                 <TitleCard>{data.data.nome}</TitleCard>
                 <Text><TextBold>CPF: </TextBold><CommomText>{data.data.cpf}</CommomText></Text>
                 <Text><TextBold>E-mail: </TextBold><CommomText>{data.data.email}</CommomText></Text>
@@ -13,7 +18,7 @@ export default function UserCard(data) {
                     <TitleCard>Valor da Dívida</TitleCard>
                     <TextBold>000</TextBold>
                 </ViewValorDivida>
-            </View>
+            </TouchableOpacity>
         </ViewCard>
     )
 }

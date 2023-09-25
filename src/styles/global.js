@@ -13,7 +13,14 @@ export const InputArea = styled.View`
     align-items: center;
     border: 1px solid #A4A6AC;
     border-radius: 8px;
-    padding: 8px;
+    padding: 10px;
+`;
+
+export const InputAreaCustom = styled.View`
+    width: 180px;
+    padding: 10px;
+    border: 1px solid #A4A6AC;
+    border-radius: 8px;
 `;
 
 export const Title = styled.Text`
@@ -88,3 +95,78 @@ export const DividaValues = styled.View`
     align-items: center;
     margin-bottom: 14px;
 `
+
+export const ViewHeader = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding-left: 15px;
+`;
+
+export const TitleInput = styled.Text`
+    font-size: 14px;
+    color: rgba(98, 168, 86, 1);
+    margin-bottom: 2px;
+    font-weight: 600;
+`;
+
+export const Form = styled.View`
+    margin-top: 19px;
+`;
+
+export const ViewField = styled.View`
+    margin-bottom: 16px;
+`;
+
+export const ViewFieldDuplo = styled.View`
+    margin-bottom: 16px;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+//--------------- Botões de Salvar e Cancelar
+
+export const BotaoSalvar = styled.TouchableOpacity`
+    background-color: rgba(98, 168, 86, 1);
+    border-radius: 8px;
+    width: 90px;
+    padding: 8px 10px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+`;
+
+export const BotaoCancelar = styled.TouchableOpacity`
+    border: 1px solid rgba(98, 168, 86, 1);
+    border-radius: 8px;
+    width: 100px;
+    padding: 8px 10px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+`;
+
+export const AreaBotoesFooter = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    bottom: 20px;
+    position: absolute;
+    align-self: center;
+`;
+
+export const TextCancelar = styled.Text`
+    color: rgba(98, 168, 86, 1);
+    font-size: 16px;
+    font-weight: 700;
+`;
+
+export const TextSalvar = styled.Text`
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+`;
+
