@@ -1,5 +1,5 @@
-import { FlatList, ActivityIndicator, View, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { FlatList, ActivityIndicator, View, RefreshControl } from 'react-native'
+import React, { useEffect, useState, useRef } from 'react'
 
 import DividaClienteCard from '../../components/DividaClienteCard/DividaClienteCard'
 
@@ -10,32 +10,46 @@ import { getDividasByCliente } from '../../services/getDividasByCliente'
 import { getDividasAbertasByCliente } from '../../services/getDividasAbertasByCliente'
 
 import Modal from 'react-native-modal';
+import ModalPagamento from '../../components/ModalPagamento/ModalPagamento'
 
 export default function VerTodasDividas({ route }) {
 
     const [dividas, setDividas] = useState();
     const [loading, setLoading] = useState(false);
-    const [valorTotalAbertas, setValorTotalAbertas] = useState()
+    const [valorTotalAbertas, setValorTotalAbertas] = useState();
     const [isModalVisible, setModalVisible] = useState(false);
+
+    const [dividaAberta, setDividaAberta] = useState([]);
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const scrollRef = useRef();
+
+    function handleUpdateView() {
+        loadDividas();
+    }
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
 
     useEffect(() => {
-        async function loadDividas() {
-            setLoading(true)
-            const response = await getDividasByCliente(route.params.id);
-            const responseAbertas = await getDividasAbertasByCliente(route.params.id)
-            setValorTotalAbertas(responseAbertas.valorTotal)
-            if (response) {
-                setDividas(response.response)
-                setLoading(false);
-            }
-            setLoading(false)
-        }
+
         loadDividas();
     }, [])
+
+    async function loadDividas() {
+        setLoading(true)
+        const response = await getDividasByCliente(route.params.id);
+        const responseAbertas = await getDividasAbertasByCliente(route.params.id)
+        setValorTotalAbertas(responseAbertas.valorTotal)
+        setDividaAberta(responseAbertas.response)
+        if (response) {
+            setDividas(response.response)
+            setLoading(false);
+        }
+        setLoading(false)
+    }
 
     return (
         <Container>
@@ -50,6 +64,13 @@ export default function VerTodasDividas({ route }) {
                             renderItem={({ item }) => <DividaClienteCard data={item} />}
                             keyExtractor={(item) => item.id}
                             showsVerticalScrollIndicator={false}
+                            ref={scrollRef}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={handleUpdateView}
+                                />
+                            }
                         />
                     )
                 }
@@ -62,24 +83,7 @@ export default function VerTodasDividas({ route }) {
                         <TextSalvar>Pagar</TextSalvar>
                     </BotaoSalvar>
                 </View>
-                <Modal
-                    isVisible={isModalVisible}
-                    style={{ justifyContent: 'flex-end', margin: 0 }}
-                >
-                    <ViewModal>
-                        <TitleCard style={{ color: 'rgba(0, 0, 0, 1)', textAlign: 'center' }}>Ao confirmar, essa dívida será quitada. Deseja realmente confirmar?</TitleCard>
-                        <TouchableOpacity onPress={toggleModal}>
-                            <View style={{ flexDirection: 'row', marginTop: 50 }}>
-                                <BotaoCancelar onPress={() => setModalVisible(!isModalVisible)}>
-                                    <TextCancelar>Cancelar</TextCancelar>
-                                </BotaoCancelar>
-                                <BotaoSalvar>
-                                    <TextSalvar>Salvar</TextSalvar>
-                                </BotaoSalvar>
-                            </View>
-                        </TouchableOpacity>
-                    </ViewModal>
-                </Modal>
+                <ModalPagamento isVisible={isModalVisible} toggleModal={toggleModal} dividaId={dividaAberta.length > 0 ?? dividaAberta[0].id} valorTotal={valorTotalAbertas} />
             </SubContainer>
         </Container>
     )

@@ -25,7 +25,12 @@ export default function Dash() {
     const scrollRef = useRef();
 
     useEffect(() => {
+        const unsubscribe = navigator.addListener('focus', fetchData);
         fetchData();
+
+        return () => {
+            unsubscribe();
+        };
     }, [])
 
     function handleUpdateView() {

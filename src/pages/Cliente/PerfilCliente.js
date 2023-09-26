@@ -1,4 +1,4 @@
-import { View, TextInput, Alert, Keyboard, TouchableWithoutFeedback, FlatList, TouchableOpacity } from 'react-native'
+import { View, TextInput, Alert, Keyboard, TouchableWithoutFeedback, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import {
@@ -11,7 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import cpfCheck from 'cpf-check';
-import { isBefore, parse } from 'date-fns';
+import { isBefore, parse, format, isValid } from 'date-fns';
 
 import VoltarHeader from '../../components/VoltarHeader/VoltarHeader';
 import AddWhite from '../../assets/AddWhite.svg';
@@ -50,7 +50,6 @@ export default function PerfilCliente({ route }) {
     }, [])
 
 
-
     async function loadCliente() {
         if (route.params.action === 'edit' && route.params.id) {
             const response = await getCliente(route.params.id);
@@ -77,14 +76,6 @@ export default function PerfilCliente({ route }) {
             const isValidCPF = cpfCheck.validate(cpf);
 
             if (isValidCPF) {
-
-                const parsedDate = parse(nascimento, 'MM-dd-yyyy', new Date(), { useAdditionalDayOfYearTokens: true, useAdditionalWeekYearTokens: true });
-
-                if (isBefore(parsedDate, new Date())) {
-                    Alert.alert('Data Inválida', 'A data inserida não pode ser maior que a data atual.');
-                    return;
-                }
-
                 const body = {
                     nome: nome,
                     email: email,
@@ -97,7 +88,6 @@ export default function PerfilCliente({ route }) {
                     Alert.alert("Cliente incluído com sucesso!")
                     setAllowDivida(true)
                     setId(retorno.id)
-                    console.log(retorno)
                 }
             } else {
                 Alert.alert('CPF Inválido', 'O CPF inserido não é válido.');
@@ -129,9 +119,8 @@ export default function PerfilCliente({ route }) {
     return (
         <Container>
             <VoltarHeader title="Clientes" />
-            <TouchableWithoutFeedback onPress={fecharTeclado}>
-                <SubContainer>
-
+            <SubContainer>
+                <TouchableWithoutFeedback onPress={fecharTeclado}>
                     <Form>
                         <ViewField>
                             <TitleInput>Nome</TitleInput>
@@ -192,42 +181,42 @@ export default function PerfilCliente({ route }) {
                             </InputArea>
                         </ViewField>
                     </Form>
-                    <HeaderDividas>
-                        <Title>Dívidas</Title>
-                        <TouchableOpacity onPress={handleVerTodasDividas}>
-                            <Title style={{ textDecorationLine: 'underline' }}>Ver Todas</Title>
-                        </TouchableOpacity>
+                </TouchableWithoutFeedback>
+                <HeaderDividas>
+                    <Title>Dívidas</Title>
+                    <TouchableOpacity onPress={handleVerTodasDividas}>
+                        <Title style={{ textDecorationLine: 'underline' }}>Ver Todas</Title>
+                    </TouchableOpacity>
+                </HeaderDividas>
 
-                    </HeaderDividas>
-                    {
-                        dividas && dividas.length > 0 ?
-                            <FlatList
-                                data={dividas}
-                                renderItem={({ item }) => <DividaClienteCard data={item} />}
-                                keyExtractor={(item) => item.id}
-                                showsVerticalScrollIndicator={false}
-                            /> : <CommomText>Cliente não possui dívidas</CommomText>
-                    }
+                {
+                    dividas && dividas.length > 0 ?
+                        <FlatList
+                            data={dividas}
+                            renderItem={({ item }) => <DividaClienteCard data={item} />}
+                            keyExtractor={(item) => item.id}
+                            showsVerticalScrollIndicator={false}
+                        /> : <CommomText>Cliente não possui dívidas</CommomText>
+                }
 
 
+                {
+                    route.params.action === 'new' ?
+                        <AreaBotoesFooter>
+                            <BotaoCancelar onPress={() => navigator.goBack()}>
+                                <TextCancelar>Cancelar</TextCancelar>
+                            </BotaoCancelar>
+                            <BotaoSalvar onPress={handleCadastrar}>
+                                <TextSalvar>Salvar</TextSalvar>
+                            </BotaoSalvar>
+                        </AreaBotoesFooter> :
+                        <></>
+                }
+                <AddButton onPress={handleDivida}>
+                    <AddWhite width="25" height="25" />
+                </AddButton>
 
-                    {
-                        route.params.action === 'new' ?
-                            <AreaBotoesFooter>
-                                <BotaoCancelar onPress={() => navigator.goBack()}>
-                                    <TextCancelar>Cancelar</TextCancelar>
-                                </BotaoCancelar>
-                                <BotaoSalvar onPress={handleCadastrar}>
-                                    <TextSalvar>Salvar</TextSalvar>
-                                </BotaoSalvar>
-                            </AreaBotoesFooter> :
-                            <></>
-                    }
-                    <AddButton onPress={handleDivida}>
-                        <AddWhite width="25" height="25" />
-                    </AddButton>
-                </SubContainer>
-            </TouchableWithoutFeedback>
-        </Container>
+            </SubContainer>
+        </Container >
     )
 }

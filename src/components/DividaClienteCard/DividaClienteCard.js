@@ -1,13 +1,18 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
 
 import { TextSalvar, ViewCard, BtnPagar, TitleCard, ViewValorDividaCliente, Title } from '../../styles/global'
 import Done from '../../assets/Done.svg'
+import ModalPagamento from '../ModalPagamento/ModalPagamento'
 
 export default function DividaClienteCard(data) {
-    useEffect(() => {
 
-    }, [])
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
+
     return (
         <ViewCard style={styles.cardContainer}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -16,7 +21,7 @@ export default function DividaClienteCard(data) {
                     data.data.dataPagamento ? (
                         <Done height="25" width="25" />
                     ) : (
-                        <BtnPagar>
+                        <BtnPagar onPress={toggleModal}>
                             <TextSalvar>Pagar</TextSalvar>
                         </BtnPagar>
                     )
@@ -27,7 +32,7 @@ export default function DividaClienteCard(data) {
                 <TitleCard style={{ color: 'rgba(64, 64, 64, 1)' }}>Valor da Dívida</TitleCard>
                 <TitleCard style={{ color: 'rgba(112, 112, 112, 1)' }}>R${data.data.valor}</TitleCard>
             </ViewValorDividaCliente>
-
+            <ModalPagamento isVisible={isModalVisible} toggleModal={toggleModal} dividaId={data.data.id} />
         </ViewCard>
     )
 }

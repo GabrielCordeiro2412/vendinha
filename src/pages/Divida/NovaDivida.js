@@ -1,7 +1,11 @@
-import { View, Text, TextInput, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { View, TextInput, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import React, { useState } from 'react'
 
-import { Container, InputArea, Title, SubContainer, TitleInput, AddButton, Form, ViewField, ViewFieldDuplo, InputAreaCustom, CommomText, BotaoCancelar, BotaoSalvar, AreaBotoesFooter, TextCancelar, TextSalvar } from '../../styles/global';
+import {
+    Container, InputArea, SubContainer, TitleInput, ViewField,
+    ViewFieldDuplo, InputAreaCustom, BotaoCancelar, BotaoSalvar, AreaBotoesFooter,
+    TextCancelar, TextSalvar, Form
+} from '../../styles/global';
 
 import VoltarHeader from '../../components/VoltarHeader/VoltarHeader';
 
@@ -17,7 +21,6 @@ export default function NovaDivida({ route }) {
 
     const [nome, setNome] = useState('');
     const [valor, setValor] = useState('');
-    const [dtPagamento, setDtPagamento] = useState('');
 
     const dataAtual = new Date();
 
@@ -26,7 +29,7 @@ export default function NovaDivida({ route }) {
     const navigator = useNavigation();
 
     async function handleCadastrar() {
-        console.log(nome, valor, dataConvertida)
+
         if (!nome || !valor) {
             Alert.alert('Preencha todos os campos!')
         } else {
@@ -35,7 +38,6 @@ export default function NovaDivida({ route }) {
                 valor: valor,
                 clienteId: route.params.id,
                 criadoEm: format(dataAtual, 'MM/dd/yyyy')
-
             }
 
             const retorno = await incluirDivida(body);
