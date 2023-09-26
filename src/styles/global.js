@@ -59,6 +59,14 @@ export const ViewValorDivida = styled.View`
     justify-content: space-between;
 `;
 
+export const ViewValorDividaCliente = styled.View`
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 6px;
+    justify-content: space-between;
+`;
+
 export const TextBold = styled.Text`
     font-weight: 700;
     font-size: 18px;
@@ -170,3 +178,30 @@ export const TextSalvar = styled.Text`
     font-weight: 700;
 `;
 
+export const HeaderDividas = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const BtnPagar = styled.TouchableOpacity`
+    background-color: rgba(206, 41, 41, 1);
+    padding: 8px 14px;
+    border-radius: 8px;
+`;
+
+export const TotalAbertasFooter = styled.View`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+`;
+
+export const ViewModal = styled.View`
+    background-color: #fff;
+    padding: 16px;
+    height: 208px;
+    align-items: center;
+    border-radius: 20px;
+`;

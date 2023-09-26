@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { TextInput, FlatList, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { TextInput, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 
 import Search from '../../assets/Search.svg';
 import AddWhite from '../../assets/AddWhite.svg';
@@ -18,22 +18,31 @@ export default function Dash() {
     const [loading, setLoading] = useState(false);
     const [clientes, setClientes] = useState();
 
+    const [refreshing, setRefreshing] = useState(false);
+
     const navigator = useNavigation();
 
+    const scrollRef = useRef();
+
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const dataAllClientes = await getAllClientes();
-                setClientes(dataAllClientes.results);
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-                setLoading(false);
-            }
-        }
         fetchData();
     }, [])
+
+    function handleUpdateView() {
+        fetchData();
+    }
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const dataAllClientes = await getAllClientes();
+            setClientes(dataAllClientes.results);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    }
 
     return (
         <Container>
@@ -56,6 +65,13 @@ export default function Dash() {
                             renderItem={({ item }) => <UserCard data={item} />}
                             keyExtractor={(item) => item.id}
                             showsVerticalScrollIndicator={false}
+                            ref={scrollRef}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={handleUpdateView}
+                                />
+                            }
                         />
                     )
                 }

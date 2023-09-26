@@ -1,22 +1,34 @@
-import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { ViewValorDivida, ViewCard, TextBold, TitleCard, CommomText } from '../../styles/global';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { getDividasAbertasByCliente } from '../../services/getDividasAbertasByCliente';
+
 export default function UserCard(data) {
+
+    const [valorTotal, setValorTotal] = useState();
+
+    useEffect(() => {
+        async function loadValorDivida() {
+            const response = await getDividasAbertasByCliente(data.data.id);
+            setValorTotal(response.valorTotal)
+        }
+        loadValorDivida();
+    }, [])
 
     const navigator = useNavigation();
 
     return (
         <ViewCard style={styles.cardContainer}>
-            <TouchableOpacity onPress={() => navigator.navigate('PerfilCliente', { action: 'edit' })}>
+            <TouchableOpacity onPress={() => navigator.navigate('PerfilCliente', { action: 'edit', id: data.data.id })}>
                 <TitleCard>{data.data.nome}</TitleCard>
                 <Text><TextBold>CPF: </TextBold><CommomText>{data.data.cpf}</CommomText></Text>
                 <Text><TextBold>E-mail: </TextBold><CommomText>{data.data.email}</CommomText></Text>
                 <ViewValorDivida>
                     <TitleCard>Valor da Dívida</TitleCard>
-                    <TextBold>000</TextBold>
+                    <TextBold>R$ {valorTotal}</TextBold>
                 </ViewValorDivida>
             </TouchableOpacity>
         </ViewCard>

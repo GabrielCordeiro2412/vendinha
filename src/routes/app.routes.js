@@ -11,6 +11,7 @@ import HomeIcon from "../assets/HomeIcon.svg";
 import UserIcon from "../assets/UserIcon.svg";
 import PerfilCliente from "../pages/Cliente/PerfilCliente";
 import NovaDivida from "../pages/Divida/NovaDivida";
+import VerTodasDividas from "../pages/Divida/VerTodasDividas";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,6 +44,11 @@ export default function AppRoutes() {
                 <Stack.Screen
                     name="NovaDivida"
                     component={NovaDivida}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="VerTodasDividas"
+                    component={VerTodasDividas}
                     options={{ headerShown: false }}
                 />
             </Stack.Navigator>
