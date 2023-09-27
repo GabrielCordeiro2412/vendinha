@@ -48,6 +48,11 @@ Aqui estão as bibliotecas utilizadas no projeto, juntamente com uma breve descr
 - **Versão:** ~3.22.0
 - **Descrição:** O react-native-screens é uma biblioteca que melhora o desempenho da navegação, especialmente em aplicativos com várias telas. Ele permite a renderização nativa das telas, o que leva a uma experiência mais suave para o usuário.
 
+### react-native-svg
+- **Versão:** ^12.1.0
+- **Descrição:** O react-native-svg é uma biblioteca para renderizar gráficos vetoriais (SVG) em aplicativos React Native. É amplamente utilizado para criar ícones, gráficos e elementos de interface de usuário com alta qualidade e escalabilidade.
+
+
 ### react-native-svg-transformer
 - **Versão:** ^1.1.0
 - **Descrição:** Essa biblioteca é usada para permitir a importação e utilização de arquivos SVG diretamente no código do React Native. Isso facilita a criação de ícones e gráficos vetoriais de alta qualidade.
