@@ -1,12 +1,10 @@
-import { View, TouchableOpacity, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, TouchableOpacity, Alert } from 'react-native';
+import React from 'react';
 
-import { ViewModal, TitleCard, BotaoCancelar, TextCancelar, BotaoSalvar, TextSalvar } from '../../styles/global'
+import { ViewModal, TitleCard, BotaoCancelar, TextCancelar, BotaoSalvar, TextSalvar } from '../../styles/global';
 
 import Modal from 'react-native-modal';
 import { pagarDivida } from '../../services/pagarDivida';
-
-import { useNavigation } from '@react-navigation/native';
 
 export default function ModalPagamento({ isVisible, toggleModal, dividaId, valorTotal }) {
 
@@ -19,9 +17,8 @@ export default function ModalPagamento({ isVisible, toggleModal, dividaId, valor
                 dividaId: dividaId
             }
             const response = await pagarDivida(body);
-
             if (response) {
-                Alert.alert("Dívida paga com sucesso!")
+                Alert.alert("Dívida paga com sucesso!");
                 toggleModal();
             }
         }

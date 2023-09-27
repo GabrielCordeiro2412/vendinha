@@ -1,4 +1,4 @@
-import { Text, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Platform, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ViewValorDivida, ViewCard, TextBold, TitleCard, CommomText } from '../../styles/global';
 
@@ -9,11 +9,18 @@ import { getDividasAbertasByCliente } from '../../services/getDividasAbertasByCl
 export default function UserCard(data) {
 
     const [valorTotal, setValorTotal] = useState();
+    const [laoding, setLoading] = useState(false);
 
     useEffect(() => {
         async function loadValorDivida() {
-            const response = await getDividasAbertasByCliente(data.data.id);
-            setValorTotal(response.valorTotal)
+            setLoading(true);
+            try {
+                const response = await getDividasAbertasByCliente(data.data.id);
+                setValorTotal(response.valorTotal);
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+            }
         }
         loadValorDivida();
     }, [])
@@ -28,7 +35,7 @@ export default function UserCard(data) {
                 <Text><TextBold>E-mail: </TextBold><CommomText>{data.data.email}</CommomText></Text>
                 <ViewValorDivida>
                     <TitleCard>Valor da Dívida</TitleCard>
-                    <TextBold>R$ {valorTotal}</TextBold>
+                    <TextBold>R$ {laoding ? <ActivityIndicator width="10" height="10" /> : valorTotal}</TextBold>
                 </ViewValorDivida>
             </TouchableOpacity>
         </ViewCard>
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
                 elevation: 4,
             },
         }),
-        borderRadius: 8, // Opcional: adicione borda ao contêiner externo para maior clareza
-        backgroundColor: 'white', // Opcional: definir uma cor de fundo para o contêiner externo
+        borderRadius: 8,
+        backgroundColor: 'white',
     },
 })

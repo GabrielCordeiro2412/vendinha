@@ -1,9 +1,9 @@
-import { View, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 
-import { TextSalvar, ViewCard, BtnPagar, TitleCard, ViewValorDividaCliente, Title } from '../../styles/global'
-import Done from '../../assets/Done.svg'
-import ModalPagamento from '../ModalPagamento/ModalPagamento'
+import { TextSalvar, ViewCard, BtnPagar, TitleCard, ViewValorDividaCliente } from '../../styles/global';
+import Done from '../../assets/Done.svg';
+import ModalPagamento from '../ModalPagamento/ModalPagamento';
 
 export default function DividaClienteCard(data) {
 
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
                 elevation: 4,
             },
         }),
-        borderRadius: 8, // Opcional: adicione borda ao contêiner externo para maior clareza
-        backgroundColor: 'white', // Opcional: definir uma cor de fundo para o contêiner externo
+        borderRadius: 8,
+        backgroundColor: 'white',
 
     },
 })

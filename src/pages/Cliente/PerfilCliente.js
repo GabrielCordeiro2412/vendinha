@@ -1,5 +1,5 @@
-import { View, TextInput, Alert, Keyboard, TouchableWithoutFeedback, FlatList, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, TextInput, Alert, Keyboard, TouchableWithoutFeedback, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
 
 import {
     Container, InputArea, Title, SubContainer, TitleInput,
@@ -11,7 +11,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import cpfCheck from 'cpf-check';
-import { isBefore, parse, format, isValid } from 'date-fns';
 
 import VoltarHeader from '../../components/VoltarHeader/VoltarHeader';
 import AddWhite from '../../assets/AddWhite.svg';
@@ -30,7 +29,7 @@ export default function PerfilCliente({ route }) {
     const [nascimento, setNascimento] = useState('');
     const [email, setEmail] = useState('');
 
-    const [id, setId] = useState()
+    const [id, setId] = useState();
 
     const [allowDivida, setAllowDivida] = useState(false);
 
@@ -38,11 +37,15 @@ export default function PerfilCliente({ route }) {
 
     const [editable, setEditable] = useState(true);
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const scrollRef = useRef();
+
     const navigator = useNavigation();
 
     useEffect(() => {
         const unsubscribe = navigator.addListener('focus', loadCliente);
-        loadCliente()
+        loadCliente();
 
         return () => {
             unsubscribe();
@@ -53,9 +56,8 @@ export default function PerfilCliente({ route }) {
     async function loadCliente() {
         if (route.params.action === 'edit' && route.params.id) {
             const response = await getCliente(route.params.id);
-            const responseDividas = await getDividasByCliente(route.params.id)
-            setDividas(responseDividas.response)
-            console.log(dividas)
+            const responseDividas = await getDividasByCliente(route.params.id);
+            setDividas(responseDividas.response);
             if (response) {
                 setNome(response.nome);
                 setCpf(response.cpf);
@@ -63,14 +65,14 @@ export default function PerfilCliente({ route }) {
                 setEmail(response.email);
                 setId(response.id);
                 setAllowDivida(true);
-                setEditable(false)
+                setEditable(false);
             }
         }
     }
 
     async function handleCadastrar() {
         if (!nome || !cpf || !nascimento || !email) {
-            Alert.alert('Preencha todos os campos!')
+            Alert.alert('Preencha todos os campos!');
         } else {
 
             const isValidCPF = cpfCheck.validate(cpf);
@@ -85,9 +87,9 @@ export default function PerfilCliente({ route }) {
                 const retorno = await incluirCliente(body);
 
                 if (retorno.response == 200) {
-                    Alert.alert("Cliente incluído com sucesso!")
-                    setAllowDivida(true)
-                    setId(retorno.id)
+                    Alert.alert("Cliente incluído com sucesso!");
+                    setAllowDivida(true);
+                    setId(retorno.id);
                 }
             } else {
                 Alert.alert('CPF Inválido', 'O CPF inserido não é válido.');
@@ -97,10 +99,14 @@ export default function PerfilCliente({ route }) {
 
     function handleDivida() {
         if (allowDivida) {
-            navigator.navigate('NovaDivida', { id: id })
+            navigator.navigate('NovaDivida', { id: id });
         } else {
-            Alert.alert("Inclua o cliente para incluir dividas")
+            Alert.alert("Inclua o cliente para incluir dividas");
         }
+    }
+
+    function handleUpdateView() {
+        loadCliente();
     }
 
     const fecharTeclado = () => {
@@ -109,9 +115,9 @@ export default function PerfilCliente({ route }) {
 
     function handleVerTodasDividas() {
         if (dividas && dividas.length > 0) {
-            navigator.navigate('VerTodasDividas', { id: id })
+            navigator.navigate('VerTodasDividas', { id: id });
         } else {
-            Alert.alert("O cliente não possui dividas")
+            Alert.alert("O cliente não possui dividas");
         }
     }
 
@@ -196,6 +202,13 @@ export default function PerfilCliente({ route }) {
                             renderItem={({ item }) => <DividaClienteCard data={item} />}
                             keyExtractor={(item) => item.id}
                             showsVerticalScrollIndicator={false}
+                            ref={scrollRef}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={handleUpdateView}
+                                />
+                            }
                         /> : <CommomText>Cliente não possui dívidas</CommomText>
                 }
 

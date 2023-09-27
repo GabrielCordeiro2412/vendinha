@@ -110,6 +110,7 @@ export const ViewHeader = styled.View`
     width: 100%;
     align-items: center;
     padding-left: 15px;
+    margin-top: 10px;
 `;
 
 export const TitleInput = styled.Text`
@@ -132,8 +133,6 @@ export const ViewFieldDuplo = styled.View`
     flex-direction: row;
     justify-content: space-between;
 `;
-
-//--------------- Botões de Salvar e Cancelar
 
 export const BotaoSalvar = styled.TouchableOpacity`
     background-color: rgba(98, 168, 86, 1);

@@ -44,7 +44,6 @@ export default function Dash() {
             setClientes(dataAllClientes.results);
             setLoading(false);
         } catch (error) {
-            console.log(error);
             setLoading(false);
         }
     }

@@ -13,7 +13,6 @@ export default function Home() {
 
     const [loading, setLoading] = useState(false);
 
-    const [dividas, setDividas] = useState();
     const [cadastradas, setCadastradas] = useState();
     const [abertas, setAbertas] = useState();
     const [pagas, setPagas] = useState();
@@ -29,7 +28,6 @@ export default function Home() {
                 const dataAllDividas = await getAllDividas();
                 const dataDividasPagas = await getDividasPagas();
                 const dataDividasAbertas = await getDividasAbertas();
-                console.log(dataAllDividas.valorTotal);
                 setCadastradas(dataAllDividas.response.__count);
                 setValorTotalCadastradas(dataAllDividas.valorTotal);
                 setPagas(dataDividasPagas.response.__count);
@@ -38,7 +36,6 @@ export default function Home() {
                 setValorTotalAbertas(dataDividasAbertas.valorTotal);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
                 setLoading(false);
             }
         }

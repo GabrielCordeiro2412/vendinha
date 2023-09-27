@@ -9,7 +9,6 @@ import VoltarHeader from '../../components/VoltarHeader/VoltarHeader'
 import { getDividasByCliente } from '../../services/getDividasByCliente'
 import { getDividasAbertasByCliente } from '../../services/getDividasAbertasByCliente'
 
-import Modal from 'react-native-modal';
 import ModalPagamento from '../../components/ModalPagamento/ModalPagamento'
 
 export default function VerTodasDividas({ route }) {
@@ -34,21 +33,20 @@ export default function VerTodasDividas({ route }) {
     };
 
     useEffect(() => {
-
         loadDividas();
     }, [])
 
     async function loadDividas() {
-        setLoading(true)
+        setLoading(true);
         const response = await getDividasByCliente(route.params.id);
         const responseAbertas = await getDividasAbertasByCliente(route.params.id)
-        setValorTotalAbertas(responseAbertas.valorTotal)
-        setDividaAberta(responseAbertas.response)
+        setValorTotalAbertas(responseAbertas.valorTotal);
+        setDividaAberta(responseAbertas.response);
         if (response) {
-            setDividas(response.response)
+            setDividas(response.response);
             setLoading(false);
         }
-        setLoading(false)
+        setLoading(false);
     }
 
     return (
@@ -83,7 +81,7 @@ export default function VerTodasDividas({ route }) {
                         <TextSalvar>Pagar</TextSalvar>
                     </BotaoSalvar>
                 </View>
-                <ModalPagamento isVisible={isModalVisible} toggleModal={toggleModal} dividaId={dividaAberta.length > 0 ?? dividaAberta[0].id} valorTotal={valorTotalAbertas} />
+                <ModalPagamento isVisible={isModalVisible} toggleModal={toggleModal} dividaId={dividaAberta.length > 0 ?? dividaAberta[0].id} valorTotal={valorTotalAbertas} refreshScreen={loadDividas} />
             </SubContainer>
         </Container>
     )

@@ -31,7 +31,7 @@ export default function NovaDivida({ route }) {
     async function handleCadastrar() {
 
         if (!nome || !valor) {
-            Alert.alert('Preencha todos os campos!')
+            Alert.alert('Preencha todos os campos!');
         } else {
             const body = {
                 descricao: nome,
@@ -43,10 +43,10 @@ export default function NovaDivida({ route }) {
             const retorno = await incluirDivida(body);
 
             if (retorno.response == 200) {
-                Alert.alert("Dívida incluída com sucesso!")
+                Alert.alert("Dívida incluída com sucesso!");
                 navigator.goBack();
             } else if (retorno == 422) {
-                Alert.alert("Este cliente já possui dívidas pendentes")
+                Alert.alert("Este cliente já possui dívidas pendentes");
             }
         }
     }
@@ -78,7 +78,6 @@ export default function NovaDivida({ route }) {
                                 <TitleInput>Data de criação</TitleInput>
                                 <InputAreaCustom>
                                     <TextInputMask
-                                        style={{ width: '100%' }}
                                         placeholder='MM/DD/YYYY'
                                         type={'datetime'}
                                         options={{
@@ -93,7 +92,6 @@ export default function NovaDivida({ route }) {
                                 <TitleInput>Valor</TitleInput>
                                 <InputAreaCustom>
                                     <TextInput
-                                        style={{ width: '100%' }}
                                         placeholder='Valor da dívida'
                                         keyboardType='number-pad'
                                         value={valor}
@@ -102,22 +100,6 @@ export default function NovaDivida({ route }) {
                                 </InputAreaCustom>
                             </View>
                         </ViewFieldDuplo>
-
-                        {/* <ViewField>
-                            <TitleInput>Data do pagamento</TitleInput>
-                            <InputAreaCustom>
-                                <TextInputMask
-                                    style={{ width: '100%' }}
-                                    placeholder='MM/DD/YYYY'
-                                    type={'datetime'}
-                                    options={{
-                                        format: 'MM/DD/YYYY',
-                                    }}
-                                    value={dtPagamento}
-                                    onChangeText={(text) => setDtPagamento(text)}
-                                />
-                            </InputAreaCustom>
-                        </ViewField> */}
                     </Form>
 
                     <AreaBotoesFooter>

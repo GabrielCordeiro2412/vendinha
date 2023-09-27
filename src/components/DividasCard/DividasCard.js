@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import React from 'react';
 
 import { DividaValues, ViewCard, TextBold, TitleCard, CommomText } from '../../styles/global';
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
-    borderRadius: 8, // Opcional: adicione borda ao contêiner externo para maior clareza
-    backgroundColor: 'white', // Opcional: definir uma cor de fundo para o contêiner externo
+    borderRadius: 8,
+    backgroundColor: 'white',
   },
 })

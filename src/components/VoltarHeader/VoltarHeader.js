@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 import { Title, ViewHeader } from '../../styles/global';
-import Arrowleft from '../../assets/Arrowleft.svg'
+import Arrowleft from '../../assets/Arrowleft.svg';
 
 import { useNavigation } from '@react-navigation/native';
 
